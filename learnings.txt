@@ -1,0 +1,55 @@
+Docker -> Tool to install softwares without headache.
+It creates an isolated env in our system and allotes some physical resources in order to run container.
+
+The images is something from which we create the container, it contains configurations, etc.
+Image basically consists of File system snapshots(files, applications we want in a container) and Startup command(like what command to be issued when container runs.)
+when we write "docker run hello-world", it searched image chache for hello-world image, if not found, it downloads from docker hub on internet and puts in image cache.
+It then creates container for that and show us the message.
+
+when we write any command, the command first go to docker client, which process the command and then to docker server(daemon-> running in background.).
+
+docker basically runs on linux, as it uses control groups to specifcally allots the hardware to each container, 
+and namespace to seprate the docker containers from ech other -> Isolotion of processes of container to host machine and other container.
+
+
+docker run = docker create(container from image) + docker start(container)
+
+docker run image-name -> creates and starts container
+docker create image-name overide-command -> returns id
+docker start -a id -> attaches to docker container and runs the command.
+docker ps -> all running containers
+docker ps --all -> all stopped as well as running containers
+docker logs id -> shows output of command of that container.
+docker system prune -> deletes every container as well as it's resources
+docker container prune -> deletes all containers only.
+docker run -it image sh -> opens shell.
+docker exec -it id command -> run multiple commands in running container.(another terminal)
+-it -> interactive terminal flag.
+
+
+
+dockerfile -> it is a configuration file, what all softwares, packages, we need to 
+run that software, and how our container should behave.
+
+dockerfile -> docker cli -> docker server -> usable docker image
+
+flow
+	specify base image
+	run some commands to install additional packages, programs
+	specify command to be run at startup
+
+
+docker build -t(tagging name) ide .(dockerfile) -> creates image
+docker run ide
+
+docker run -p localport:appPort(inside container) image_name -> port forwarding -> It forward local port to appport in our container's network ports.
+
+
+docker compose -> cli tool
+-running multiple containers at same time
+-automates some commands like docker run arg.
+-issue multiple commands fastly.
+
+docker run image -> docker-compose up
+
+docker build . && docker run image -> docker-compose up --build
